@@ -1,0 +1,34 @@
+.container-md
+  = link_to t('.title'), root_path, class: 'd-flex align-items-center navbar-brand gap-2'
+
+  button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse'
+    aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
+
+  .collapse.navbar-collapse.pt-2.pt-md-0.justify-content-md-between id='navbarCollapse'
+    ul.navbar-nav.flex-grow-1.me-md-3
+      li.nav-item = link_to t('.home'), root_path, class: "nav-link #{'active' if current_page?(root_path)}"
+
+      - if signed_in?
+        li.nav-item = link_to t('.my_bulletins'), profile_path,
+          class: "nav-link #{'active' if current_page?(profile_path)}"
+
+        li.nav-item = link_to t('.add_bulletin'), new_bulletin_path,
+          class: "nav-link #{'active' if current_page?(new_bulletin_path)}"
+
+        - if current_user.admin?
+          li.nav-item.ms-md-auto = link_to t('.admin'), admin_root_path,
+            class: "nav-link #{'active' if current_page?(admin_root_path)}"
+
+      hr.text-white-50.my-1.d-md-none
+
+    ul.navbar-nav
+
+        - if signed_in?
+          = form_with url: auth_logout_path, method: 'delete' do |f|
+            = f.button t('.logout'), class: 'nav-link text-light w-100 d-flex'
+        - else
+          li.nav-item
+            = form_with url: auth_request_path(:github), data: { turbo: 'false' } do |f|
+              = f.button class: 'nav-link text-light w-100 d-flex' do
+                i.bi.bi-github.me-2
+                = t('.sign_in')

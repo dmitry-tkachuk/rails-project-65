@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: BulletinTitleOne
+  description: BulletinDescriptionOne
+  category: one
+  user: one
+  state: draft
+
+draft:
+  title: BulletinTitleTwo
+  description: DraftBulletinDescriptionTwo
+  category: one
+  user: one
+  state: draft
+
+published:
+  title: PublishedBulletinTitleOne
+  description: PublishedBulletinDescriptionOne
+  category: one
+  user: one
+  state: published
+
+under_moderation:
+  title: UnderModerationBulletinTitleOne
+  description: UnderModerationBulletinDescriptionOne
+  category: one
+  user: one
+  state: under_moderation
+
+rejected:
+  title: RejectedBulletinTitleOne
+  description: RejectedBulletinDescriptionOne
+  category: one
+  user: one
+  state: rejected
+
+archived:
+  title: ArchivedBulletinDescriptionOne
+  description: ArchivedBulletinDescriptionOne
+  category: one
+  user: one
+  state: archived

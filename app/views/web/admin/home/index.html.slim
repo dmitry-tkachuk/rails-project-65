@@ -1,0 +1,59 @@
+h1.fs-5.mb-3
+  = t('.title')
+
+= search_form_for @q, url: admin_root_path do |f|
+  .row
+    .col-12.col-md-5.col-lg-6
+      = f.input :title_or_user_name_or_user_email_cont,
+        as: :string,
+        label: false,
+        hint: t('.search_by_title_or_user_name')
+    .col-12.col-md-3.col-lg-2
+      = f.input :category_id_eq,
+        hint: t('.search_by_category'),
+        as: :select,
+        collection: @categories,
+        label: false
+    .col-12.col-md-4.d-flex.align-items-start.gap-2.gap-md-4.mb-3
+      = f.button :submit, class: 'btn btn-primary flex-grow-1'
+      = link_to t('reset'), admin_root_path, class: 'btn btn-outline-primary flex-grow-1'
+
+.overflow-x-scroll
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th{ scope = 'col' } = sort_link @q, :title, Bulletin.human_attribute_name(:title),
+                                        class: 'link-dark text-decoration-none'
+        th{ scope = 'col' } = sort_link @q, :category_name, Bulletin.human_attribute_name(:category),
+                                        class: 'link-dark text-decoration-none'
+        th{ scope = 'col' } = sort_link @q, :user_name, Bulletin.human_attribute_name(:user),
+                                        class: 'link-dark text-decoration-none'
+        th{ scope = 'col' } = sort_link @q, :updated_at, Bulletin.human_attribute_name(:updated_at),
+                                        class: 'link-dark text-decoration-none'
+        th
+
+    tbody
+      - @bulletins.each do |bulletin|
+        tr
+          td = link_to bulletin.title, bulletin_path(bulletin)
+          td = bulletin.category.name
+          td = mail_to bulletin.user.email, bulletin.user.name_or_email, class: 'link-secondary'
+          td = distance_of_time_in_words_to_now(bulletin.updated_at)
+          td
+            .d-flex.flex-nowrap.gap-2
+              - if bulletin.may_publish?
+                = link_to t('.publish'), publish_admin_bulletin_path(bulletin),
+                  data: { turbo_method: :patch, turbo_confirm: t('.publish_confirmation') },
+                  class: 'text-nowrap'
+              - if bulletin.may_reject?
+                = link_to t('.reject'), reject_admin_bulletin_path(bulletin),
+                  data: { turbo_method: :patch, turbo_confirm: t('.reject_confirmation') },
+                  class: 'text-nowrap'
+              - if bulletin.may_archive?
+                = link_to t('.archive'), archive_admin_bulletin_path(bulletin),
+                  data: { turbo_method: :patch, turbo_confirm: t('.archive_confirmation') },
+                  class: 'text-nowrap link-danger'
+
+= paginate @bulletins, theme: 'bootstrap-5',
+                        pagination_class: 'pagination flex-wrap justify-content-end',
+                        nav_class: 'pt-3'

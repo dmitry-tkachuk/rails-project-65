@@ -1,0 +1,14 @@
+one:
+  name: User1
+  email: one@test.com
+  admin: false
+
+two:
+  name: User2
+  email: two@test.com
+  admin: false
+
+admin:
+  name: AdminAdmin
+  email: admin@test.com
+  admin: true
