@@ -11,11 +11,13 @@ class CategoryTest < ActiveSupport::TestCase
 
   test 'should save valid category' do
     category = Category.new(@category_attrs)
+
     assert category.save
   end
 
   test 'should not save category without name' do
     category = Category.new(@category_attrs.except(:name))
+
     assert_not category.save
   end
 end

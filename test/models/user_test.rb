@@ -11,11 +11,13 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should save valid user' do
     user = User.new(@user_attrs)
+
     assert user.save
   end
 
   test 'should not save user without email' do
     user = User.new(@user_attrs.except(:email))
+
     assert_not user.save
   end
 end

@@ -10,41 +10,49 @@ class BulletinTest < ActiveSupport::TestCase
 
   test 'should not save bulletin without title' do
     bulletin = Bulletin.new(description: 'Lorem ipsum', category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin without a title'
   end
 
   test 'should not save bulletin with too short title' do
     bulletin = Bulletin.new(title: 'A', description: 'Lorem ipsum', category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin with a title that is too short'
   end
 
   test 'should not save bulletin with too long title' do
     bulletin = Bulletin.new(title: 'A' * 51, description: 'Lorem ipsum', category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin with a title that is too long'
   end
 
   test 'should not save bulletin without description' do
     bulletin = Bulletin.new(title: 'Title', category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin without a description'
   end
 
   test 'should not save bulletin with too short description' do
     bulletin = Bulletin.new(title: 'Title', description: 'A', category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin with a description that is too short'
   end
 
   test 'should not save bulletin with too long description' do
     bulletin = Bulletin.new(title: 'Title', description: 'A' * 1001, category: @category, user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin with a description that is too long'
   end
 
   test 'should not save bulletin without category' do
     bulletin = Bulletin.new(title: 'Title', description: 'Lorem ipsum', user: @user)
+
     assert_not bulletin.save, 'Saved the bulletin without a category'
   end
 
   test 'should not save bulletin without user' do
     bulletin = Bulletin.new(title: 'Title', description: 'Lorem ipsum', category: @category)
+
     assert_not bulletin.save, 'Saved the bulletin without a user'
   end
 
