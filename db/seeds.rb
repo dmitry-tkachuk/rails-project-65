@@ -12,6 +12,7 @@ ActiveRecord::Base.transaction do
     )
   end
   users = User.all
+  User.create(name: 'Owner', email: ENV.fetch('OWNER_EMAIL', nil), admin: true)
 
   8.times do
     Category.find_or_create_by(
